@@ -40,7 +40,6 @@ class MethodChannelVideoPlayerOneplusdream
 
   @override
   Future<void> init(int videoId) {
-    print('init in method channel $videoId');
     final MethodChannel channel = ensureChannelInitialized(videoId);
     return channel.invokeMethod<void>('ready');
   }
@@ -61,7 +60,6 @@ class MethodChannelVideoPlayerOneplusdream
   @override
   Future<void> togglePause(int videoId, bool isPause) {
     final MethodChannel channel = ensureChannelInitialized(videoId);
-    print('called $isPause');
     return channel.invokeMethod<void>('togglePause', isPause);
   }
 

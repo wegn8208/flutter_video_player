@@ -31,7 +31,6 @@ class MobileVideoPlayerController implements VideoPlayerController {
   }
 
   Future<void> play(PlayingItem item) {
-    print('play $_videoId');
     return VideoPlayerOneplusdreamPlatform.instance.play(_videoId, item);
   }
 
