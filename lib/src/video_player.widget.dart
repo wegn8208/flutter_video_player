@@ -45,9 +45,6 @@ class VideoPlayerOnePlusDream extends StatefulWidget {
   /// default is false
   final bool hideControls;
 
-  /// used when you want to attach controller and invoke some function by controller
-  final VideoCreatedCallback? onVideoCreated;
-
   /// back icon clicked when it's not in full screen mode
   final VoidCallback? onBack;
 
@@ -60,8 +57,11 @@ class VideoPlayerOnePlusDream extends StatefulWidget {
   /// set buffer duration, minimum value should be 1
   final double? bufferDuration;
 
+  final VideoPlayerController controller;
+
   const VideoPlayerOnePlusDream(
     this.playingItems, {
+    required this.controller,
     this.autoPlay = true,
     this.protectionText,
     this.enablePreventScreenCapture = false,
@@ -70,7 +70,6 @@ class VideoPlayerOnePlusDream extends StatefulWidget {
     this.posterImage,
     this.hideBackButton = false,
     this.initialPlayIndex = 0,
-    this.onVideoCreated,
     this.onBack,
     this.onPlaying,
     this.lastPlayMessage,
@@ -80,16 +79,30 @@ class VideoPlayerOnePlusDream extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _VideoPlayerOnePlusDreamState createState() =>
-      _VideoPlayerOnePlusDreamState();
+  VideoPlayerOnePlusDreamState createState() => VideoPlayerOnePlusDreamState();
 }
 
 var _nextVideoPlayerCreationId = 0;
 
-class _VideoPlayerOnePlusDreamState extends State<VideoPlayerOnePlusDream> {
+class VideoPlayerOnePlusDreamState extends State<VideoPlayerOnePlusDream> {
   final int _videoId = _nextVideoPlayerCreationId++;
-  final Completer<VideoPlayerController> _controller =
-      Completer<VideoPlayerController>();
+
+  bool _loaded = false;
+
+  @override
+  void initState() {
+    init();
+    super.initState();
+  }
+
+  Future<void> init() async {
+    if (mounted) {
+      await widget.controller.init(_videoId, this);
+      setState(() {
+        _loaded = true;
+      });
+    }
+  }
 
   @override
   void dispose() {
@@ -112,40 +125,30 @@ class _VideoPlayerOnePlusDreamState extends State<VideoPlayerOnePlusDream> {
   }
 
   Future<void> _disposeController() async {
-    final VideoPlayerController controller = await _controller.future;
-    controller.dispose();
-  }
-
-  Future<void> onPlatformViewCreated(int id) async {
-    final VideoPlayerController controller = await VideoPlayerController.init(
-      id,
-      this,
-    );
-    _controller.complete(controller);
-    if (widget.onVideoCreated != null) {
-      widget.onVideoCreated!(controller);
-    }
+    widget.controller.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return VideoPlayerOneplusdreamPlatform.instance.buildView(
-      _videoId,
-      onPlatformViewCreated,
-      params: {
-        "autoPlay": widget.autoPlay,
-        "protectionText": widget.protectionText,
-        "enablePreventScreenCapture": widget.enablePreventScreenCapture,
-        "marqueeText": widget.marqueeText,
-        "enableMarquee": widget.enableMarquee,
-        "playingItems": widget.playingItems.map((e) => e.toJson()).toList(),
-        "initialPlayIndex": widget.initialPlayIndex,
-        "posterImage": widget.posterImage,
-        "hideBackButton": widget.hideBackButton,
-        "lastPlayingMessage": widget.lastPlayMessage,
-        "hideControls": widget.hideControls,
-        "bufferDuration": widget.bufferDuration,
-      },
-    );
+    return _loaded
+        ? VideoPlayerOneplusdreamPlatform.instance.buildView(
+            _videoId,
+            params: {
+              "autoPlay": widget.autoPlay,
+              "protectionText": widget.protectionText,
+              "enablePreventScreenCapture": widget.enablePreventScreenCapture,
+              "marqueeText": widget.marqueeText,
+              "enableMarquee": widget.enableMarquee,
+              "playingItems":
+                  widget.playingItems.map((e) => e.toJson()).toList(),
+              "initialPlayIndex": widget.initialPlayIndex,
+              "posterImage": widget.posterImage,
+              "hideBackButton": widget.hideBackButton,
+              "lastPlayingMessage": widget.lastPlayMessage,
+              "hideControls": widget.hideControls,
+              "bufferDuration": widget.bufferDuration,
+            },
+          )
+        : Container();
   }
 }

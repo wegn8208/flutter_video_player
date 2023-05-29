@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:video_player_oneplusdream/video_player_oneplusdream.dart';
 
 class FirstRoute extends StatelessWidget {
-  VideoPlayerController? controller;
+  VideoPlayerController controller = createVideoController();
   FirstRoute({super.key});
 
   @override
@@ -32,6 +32,7 @@ class FirstRoute extends StatelessWidget {
                   position: 90,
                 ),
               ],
+              controller: controller,
               initialPlayIndex: 1,
               enableMarquee: true,
               enablePreventScreenCapture: false,
@@ -45,7 +46,6 @@ class FirstRoute extends StatelessWidget {
                 print(
                     "onPlaying event happened $event, ${event.status}, po ${event.currentPosition}");
               },
-              onVideoCreated: ((c) => controller = c),
             ),
           ),
         ],

@@ -16,39 +16,17 @@ import 'video_player_oneplusdream.dart';
 import 'video_player_oneplusdream_platform_interface.dart';
 import 'dart:js' as js;
 
+bool _imported = false;
+
 /// A web implementation of the VideoPlayerOneplusdreamPlatform of the VideoPlayerOneplusdream plugin.
 class VideoPlayerOneplusdreamWeb extends VideoPlayerOneplusdreamPlatform {
-  String elementId = "";
   dynamic player;
   final List<String> scripts = [
     "packages/video_player_oneplusdream/lib/assets/videojs_playlist.min.js",
     "packages/video_player_oneplusdream/lib/assets/controller.js"
   ];
 
-  /// Constructs a VideoPlayerOneplusdreamWeb
-  VideoPlayerOneplusdreamWeb() {
-    elementId = generateRandomString(7);
-    // ignore: undefined_prefixed_name
-    ui.platformViewRegistry.registerViewFactory(elementId, (int id) {
-      final html.Element htmlElement = html.DivElement()
-        ..style.width = '100%'
-        ..style.height = '100%'
-        ..children = [
-          html.VideoElement()
-            ..id = elementId
-            ..style.height = "100%"
-            ..style.width = "100%"
-            ..className = "video-js vjs-default-skin",
-        ];
-      return htmlElement;
-    });
-  }
-  String generateRandomString(int len) {
-    var r = Random();
-    const _chars = 'abcdefghijklmnopqrstuvwxyz1234567890';
-    return List.generate(len, (index) => _chars[r.nextInt(_chars.length)])
-        .join();
-  }
+  VideoPlayerOneplusdreamWeb() {}
 
   Future<void> importJSFile(String library) async {
     final head = html.querySelector('head');
@@ -167,11 +145,14 @@ class VideoPlayerOneplusdreamWeb extends VideoPlayerOneplusdreamPlatform {
   }
 
   void initPlayer(int videoId, Map<String, dynamic> params) async {
-    for (var script in scripts) {
-      await importJSFile(script);
+    if (!_imported) {
+      for (var srcipt in scripts) {
+        await importJSFile(srcipt);
+      }
+      _imported = true;
     }
     player = js.context.callMethod('videojs', [
-      html.document.getElementById(elementId),
+      html.document.getElementById('video_$videoId'),
       js.JsObject.jsify({
         "fill": true,
         "responsive": true,
@@ -193,14 +174,12 @@ class VideoPlayerOneplusdreamWeb extends VideoPlayerOneplusdreamPlatform {
 
   @override
   Widget buildView(
-    int creationId,
-    PlatformViewCreatedCallback onPlatformViewCreated, {
+    int creationId, {
     Map<String, dynamic> params = const <String, dynamic>{},
   }) {
     return HtmlElementView(
-      viewType: elementId,
+      viewType: 'video_$creationId',
       onPlatformViewCreated: (id) {
-        onPlatformViewCreated(id);
         initPlayer(creationId, params);
       },
     );

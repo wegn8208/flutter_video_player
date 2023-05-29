@@ -6,7 +6,7 @@ import 'first.dart';
 
 class HomeRoute extends StatelessWidget {
   HomeRoute({super.key});
-  VideoPlayerController? controller;
+  VideoPlayerController controller = createVideoController();
   List<PlayingItem> items = [
     PlayingItem(
       id: '1',
@@ -36,6 +36,7 @@ class HomeRoute extends StatelessWidget {
                 height: 300,
                 child: VideoPlayerOnePlusDream(
                   items,
+                  controller: controller,
                   enableMarquee: true,
                   enablePreventScreenCapture: true,
                   marqueeText: "Marquee",
@@ -45,34 +46,33 @@ class HomeRoute extends StatelessWidget {
                         "status ${event.status} position: ${event.currentPosition}");
                     print("onPlaying ${event.item.url}");
                   },
-                  onVideoCreated: ((c) => controller = c),
                 ),
               ),
               ElevatedButton(
                   onPressed: () async {
-                    controller?.togglePause(true);
+                    controller.togglePause(true);
                     await Navigator.push(
                       context,
                       MaterialPageRoute(builder: (_) => CacheRoute()),
                     );
-                    await controller?.togglePause(false);
+                    await controller.togglePause(false);
                   },
                   child: const Text("go to cache page")),
               ElevatedButton(
                   onPressed: () async {
-                    controller?.togglePause(true);
+                    controller.togglePause(true);
                     print("pause to navigate into new page");
                     await Navigator.push(
                       context,
                       MaterialPageRoute(builder: (_) => FirstRoute()),
                     );
                     print("back and play again");
-                    await controller?.togglePause(false);
+                    await controller.togglePause(false);
                   },
                   child: const Text("go to new page")),
               ElevatedButton(
                   onPressed: () {
-                    controller?.toggleFullScreen(
+                    controller.toggleFullScreen(
                         ToggleFullScreenParam(isFullScreen: true));
                   },
                   child: const Text("open full screen")),

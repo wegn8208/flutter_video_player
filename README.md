@@ -97,7 +97,6 @@ class HomeRoute extends StatelessWidget {
                         "status ${event.status} position: ${event.currentPosition}");
                     print("onPlaying ${event.item.url}");
                   },
-                  onVideoCreated: ((c) => controller = c),
                 ),
               ),
               ElevatedButton(

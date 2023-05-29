@@ -40,6 +40,7 @@ class MethodChannelVideoPlayerOneplusdream
 
   @override
   Future<void> init(int videoId) {
+    print('init in method channel $videoId');
     final MethodChannel channel = ensureChannelInitialized(videoId);
     return channel.invokeMethod<void>('ready');
   }
@@ -107,8 +108,7 @@ class MethodChannelVideoPlayerOneplusdream
 
   @override
   Widget buildView(
-    int creationId,
-    PlatformViewCreatedCallback onPlatformViewCreated, {
+    int creationId, {
     Map<String, dynamic> params = const <String, dynamic>{},
   }) {
     if (defaultTargetPlatform == TargetPlatform.android) {
@@ -134,14 +134,12 @@ class MethodChannelVideoPlayerOneplusdream
             },
           )
             ..addOnPlatformViewCreatedListener(p.onPlatformViewCreated)
-            ..addOnPlatformViewCreatedListener(onPlatformViewCreated)
             ..create();
         },
       );
     } else if (defaultTargetPlatform == TargetPlatform.iOS) {
       return UiKitView(
         viewType: 'oneplusdream/video_player_ios',
-        onPlatformViewCreated: onPlatformViewCreated,
         creationParams: params,
         creationParamsCodec: const StandardMessageCodec(),
       );

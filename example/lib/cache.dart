@@ -49,6 +49,7 @@ class CacheRoute extends StatelessWidget {
                   fitMode: FitMode.cover,
                 ),
               ],
+              controller: cacheController,
               hideBackButton: true,
               hideControls: true,
               bufferDuration: 1,
@@ -62,7 +63,6 @@ class CacheRoute extends StatelessWidget {
                 print(
                     "onPlaying event happened $event, ${event.status}, po ${event.currentPosition}");
               },
-              onVideoCreated: ((c) => cacheController = c),
             ),
           ),
           TextButton(

@@ -57,8 +57,7 @@ abstract class VideoPlayerOneplusdreamPlatform extends PlatformInterface {
   }
 
   Widget buildView(
-    int creationId,
-    PlatformViewCreatedCallback onPlatformViewCreated, {
+    int creationId, {
     Map<String, dynamic> params = const <String, dynamic>{},
   }) {
     throw UnimplementedError('buildView() has not been implemented.');
