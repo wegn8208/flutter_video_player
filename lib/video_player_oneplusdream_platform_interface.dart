@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'video_player_oneplusdream.dart';
@@ -56,7 +57,8 @@ abstract class VideoPlayerOneplusdreamPlatform extends PlatformInterface {
   }
 
   Widget buildView(
-    int creationId, {
+    int creationId,
+    PlatformViewCreatedCallback onPlatformViewCreated, {
     Map<String, dynamic> params = const <String, dynamic>{},
   }) {
     throw UnimplementedError('buildView() has not been implemented.');

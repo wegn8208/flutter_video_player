@@ -87,7 +87,7 @@ var _nextVideoPlayerCreationId = 0;
 class VideoPlayerOnePlusDreamState extends State<VideoPlayerOnePlusDream> {
   final int _videoId = _nextVideoPlayerCreationId++;
 
-  bool _loaded = false;
+  bool _loaded = !kIsWeb;
 
   @override
   void initState() {
@@ -96,7 +96,7 @@ class VideoPlayerOnePlusDreamState extends State<VideoPlayerOnePlusDream> {
   }
 
   Future<void> init() async {
-    if (mounted) {
+    if (mounted && kIsWeb) {
       await widget.controller.init(_videoId, this);
       setState(() {
         _loaded = true;
@@ -128,11 +128,16 @@ class VideoPlayerOnePlusDreamState extends State<VideoPlayerOnePlusDream> {
     widget.controller.dispose();
   }
 
+  Future<void> onPlatformViewCreated(int id) async {
+    await widget.controller.init(_videoId, this);
+  }
+
   @override
   Widget build(BuildContext context) {
     return _loaded
         ? VideoPlayerOneplusdreamPlatform.instance.buildView(
             _videoId,
+            onPlatformViewCreated,
             params: {
               "autoPlay": widget.autoPlay,
               "protectionText": widget.protectionText,

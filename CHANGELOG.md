@@ -9,3 +9,7 @@ First Release, happy using!
 ## 1.0.1
 
 Add cache function for ios and fix web multiple videos issue
+
+## 1.0.1+1
+
+Fix mobile method channel issue

@@ -13,6 +13,7 @@ class MobileVideoPlayerController implements VideoPlayerController {
   ) async {
     _videoId = videoId;
     _videoPlayerState = videoPlayerState;
+    print('_videoId $_videoId');
     await VideoPlayerOneplusdreamPlatform.instance.init(_videoId);
     _connectStreams(_videoId);
   }

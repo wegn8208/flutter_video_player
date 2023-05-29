@@ -170,7 +170,8 @@ class VideoPlayerOneplusdreamWeb extends VideoPlayerOneplusdreamPlatform {
 
   @override
   Widget buildView(
-    int creationId, {
+    int creationId,
+    PlatformViewCreatedCallback onPlatformViewCreated, {
     Map<String, dynamic> params = const <String, dynamic>{},
   }) {
     return HtmlElementView(
