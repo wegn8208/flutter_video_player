@@ -5,8 +5,6 @@
 import 'dart:async';
 import 'dart:html' as html;
 import 'dart:js';
-import 'dart:math';
-import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
@@ -25,8 +23,6 @@ class VideoPlayerOneplusdreamWeb extends VideoPlayerOneplusdreamPlatform {
     "packages/video_player_oneplusdream/lib/assets/videojs_playlist.min.js",
     "packages/video_player_oneplusdream/lib/assets/controller.js"
   ];
-
-  VideoPlayerOneplusdreamWeb() {}
 
   Future<void> importJSFile(String library) async {
     final head = html.querySelector('head');

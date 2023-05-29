@@ -30,15 +30,18 @@ class MobileVideoPlayerController implements VideoPlayerController {
     }
   }
 
+  @override
   Future<void> play(PlayingItem item) {
     return VideoPlayerOneplusdreamPlatform.instance.play(_videoId, item);
   }
 
+  @override
   Future<void> toggleFullScreen(ToggleFullScreenParam param) {
     return VideoPlayerOneplusdreamPlatform.instance
         .toggleFullScreen(_videoId, param);
   }
 
+  @override
   Future<void> togglePause(bool isPause) {
     return VideoPlayerOneplusdreamPlatform.instance
         .togglePause(_videoId, isPause);
