@@ -27,6 +27,7 @@ class WebVideoPlayerController implements VideoPlayerController {
             ..id = 'video_$_videoId'
             ..style.height = "100%"
             ..style.width = "100%"
+            ..attributes = {'playsinline': ''}
             ..className = "video-js vjs-default-skin",
         ];
       return htmlElement;
