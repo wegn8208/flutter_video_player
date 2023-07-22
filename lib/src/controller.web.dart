@@ -54,6 +54,7 @@ class WebVideoPlayerController implements VideoPlayerController {
 
   @override
   Future<void> toggleFullScreen(ToggleFullScreenParam param) {
+    print('controller videoId $_videoId toggleFullScreen ${param}');
     return VideoPlayerOneplusdreamPlatform.instance
         .toggleFullScreen(_videoId, param);
   }
