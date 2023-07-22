@@ -152,9 +152,9 @@ class VideoPlayerOneplusdreamWeb extends VideoPlayerOneplusdreamPlatform {
       js.JsObject.jsify({
         "fill": true,
         "responsive": true,
-        "controls": true,
-        "autoplay": true,
-        "preload": true,
+        "controls": params['controls'] ?? true,
+        "autoplay": params['autoPlay'] ?? false,
+        "preload": params['preload'] ?? "auto",
         "poster": params["posterImage"],
         "playbackRates": [0.5, 1, 1.25, 1.5, 2],
       })
