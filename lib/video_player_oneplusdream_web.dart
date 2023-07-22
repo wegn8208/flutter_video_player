@@ -75,6 +75,7 @@ class VideoPlayerOneplusdreamWeb extends VideoPlayerOneplusdreamPlatform {
 
   @override
   Future<void> play(int videoId, PlayingItem item) async {
+    print('oneplusdream $videoId play ${item.url}');
     JsFunction func = player['src'];
     func.apply([
       js.JsObject.jsify({"src": item.url}),
@@ -136,6 +137,7 @@ class VideoPlayerOneplusdreamWeb extends VideoPlayerOneplusdreamPlatform {
                 PlayingEvent(videoId, PlayingEventDetail.fromJson(arguments)));
             break;
           default:
+            print('oneplusdream $videoId method not implemented');
             throw MissingPluginException();
         }
       } catch (e) {
