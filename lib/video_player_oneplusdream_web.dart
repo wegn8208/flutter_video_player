@@ -68,6 +68,7 @@ class VideoPlayerOneplusdreamWeb extends VideoPlayerOneplusdreamPlatform {
   @override
   Future<void> toggleFullScreen(
       int videoId, ToggleFullScreenParam param) async {
+    print('oneplusdream $videoId toggleFullScreen');
     JsFunction func = player['requestFullscreen'];
     func.apply([], thisArg: player);
   }
@@ -99,6 +100,7 @@ class VideoPlayerOneplusdreamWeb extends VideoPlayerOneplusdreamPlatform {
 
   @override
   Future<void> dispose({required int videoId}) async {
+    print('oneplusdream $videoId dispose');
     js.context['oneplusdreamOnPlayerListen_$videoId'] = null;
   }
 
@@ -116,11 +118,13 @@ class VideoPlayerOneplusdreamWeb extends VideoPlayerOneplusdreamPlatform {
 
   @override
   Stream<PlayingEvent> onPlaying({required int videoId}) {
+    print('oneplusdream $videoId onPlaying');
     return _events(videoId).whereType<PlayingEvent>();
   }
 
   @override
   Future<void> init(int videoId) async {
+    print('oneplusdream $videoId init');
     js.context['oneplusdreamOnPlayerListen_$videoId'] = (method, arguments) {
       try {
         switch (method) {
@@ -176,6 +180,7 @@ class VideoPlayerOneplusdreamWeb extends VideoPlayerOneplusdreamPlatform {
     PlatformViewCreatedCallback onPlatformViewCreated, {
     Map<String, dynamic> params = const <String, dynamic>{},
   }) {
+    print('oneplusdream $creationId buildView');
     return HtmlElementView(
       viewType: 'video_$creationId',
       onPlatformViewCreated: (id) {
