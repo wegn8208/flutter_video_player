@@ -156,6 +156,8 @@ class VideoPlayerOneplusdreamWeb extends VideoPlayerOneplusdreamPlatform {
         "autoplay": params['autoPlay'] ?? false,
         "preload": params['preload'] ?? "auto",
         "poster": params["posterImage"],
+        "preferFullWindow": true, //for ios
+        "fullScreen": {"navigationUi": "hide"},
         "playbackRates": [0.5, 1, 1.25, 1.5, 2],
       })
     ]);
