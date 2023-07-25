@@ -37,6 +37,12 @@ class MobileVideoPlayerController implements VideoPlayerController {
   }
 
   @override
+  Future<void> seek(int position) {
+    // TODO: implement seek
+    throw UnimplementedError();
+  }
+
+  @override
   Future<void> toggleFullScreen(ToggleFullScreenParam param) {
     return VideoPlayerOneplusdreamPlatform.instance
         .toggleFullScreen(_videoId, param);

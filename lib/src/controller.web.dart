@@ -53,6 +53,11 @@ class WebVideoPlayerController implements VideoPlayerController {
   }
 
   @override
+  Future<void> seek(int position) {
+    return VideoPlayerOneplusdreamPlatform.instance.seek(_videoId, position);
+  }
+
+  @override
   Future<void> toggleFullScreen(ToggleFullScreenParam param) {
     print('controller videoId $_videoId toggleFullScreen ${param}');
     return VideoPlayerOneplusdreamPlatform.instance
@@ -69,6 +74,7 @@ class WebVideoPlayerController implements VideoPlayerController {
 
   /// Disposes of the platform resources
   void dispose() {
+    print('controller videoId $_videoId dispose');
     VideoPlayerOneplusdreamPlatform.instance.dispose(videoId: _videoId);
   }
 }
