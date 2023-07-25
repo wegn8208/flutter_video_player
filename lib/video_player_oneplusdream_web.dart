@@ -68,7 +68,7 @@ class VideoPlayerOneplusdreamWeb extends VideoPlayerOneplusdreamPlatform {
   @override
   Future<void> toggleFullScreen(
       int videoId, ToggleFullScreenParam param) async {
-    print('oneplusdream $videoId toggleFullScreen');
+    print('oneplusdream $videoId toggleFullScreen ${param.isFullScreen}');
     JsFunction func = player['requestFullscreen'];
     func.apply([], thisArg: player);
   }
@@ -86,6 +86,19 @@ class VideoPlayerOneplusdreamWeb extends VideoPlayerOneplusdreamPlatform {
     }
     JsFunction setTitle = player['updateTitleFunc'];
     setTitle.apply([item.title], thisArg: player);
+  }
+
+  @override
+  Future seek(int videoId, int position) async {
+    // print('oneplusdream $videoId play ${item.url}');
+    JsFunction func = player['src'];
+    // func.apply([
+    // js.JsObject.jsify({"src": item.url}),
+    // ], thisArg: player);
+    if ((position ?? 0) > 0) {
+      JsFunction setCurrentTime = player['currentTime'];
+      setCurrentTime.apply([position], thisArg: player);
+    }
   }
 
   @override
@@ -119,7 +132,6 @@ class VideoPlayerOneplusdreamWeb extends VideoPlayerOneplusdreamPlatform {
 
   @override
   Stream<PlayingEvent> onPlaying({required int videoId}) {
-    print('oneplusdream $videoId onPlaying');
     return _events(videoId).whereType<PlayingEvent>();
   }
 
@@ -130,9 +142,11 @@ class VideoPlayerOneplusdreamWeb extends VideoPlayerOneplusdreamPlatform {
       try {
         switch (method) {
           case ON_BACK_CLICKED:
+            print('oneplusdream $videoId on back clicked');
             _videoEventStreamController.add(BackEvent(videoId));
             break;
           case ON_PLAYING:
+            print('oneplusdream $videoId on playing $arguments');
             _videoEventStreamController.add(
                 PlayingEvent(videoId, PlayingEventDetail.fromJson(arguments)));
             break;
@@ -158,15 +172,21 @@ class VideoPlayerOneplusdreamWeb extends VideoPlayerOneplusdreamPlatform {
       js.JsObject.jsify({
         "fill": true,
         "responsive": true,
-        "controls": params['controls'] ?? true,
+        // "controls": !(params['hideControls'] ?? false),
+        "controls": true,
         "autoplay": params['autoPlay'] ?? false,
-        "preload": params['preload'] ?? "auto",
+        "preload": params['preload'] ?? true,
         "poster": params["posterImage"],
-        "preferFullWindow": true, //for ios
-        // "fullscreen": {"navigationUi": "auto"},
+        "preferFullWindow": false, //for ios
+        "fullscreen": {"navigationUi": "auto"},
         "playbackRates": [0.5, 1, 1.25, 1.5, 2],
-        // "disablePictureInPicture": true,
-        // "enableDocumentPictureInPicture": false,
+        "disablePictureInPicture": true,
+        "enableDocumentPictureInPicture": false,
+        "nativeVideoTracks": true,
+        "nativeAudioTracks": true,
+        "nativeControlsForTouch": false,
+        "muted": true,
+        "normalizeAutoplay": true
       })
     ]);
 
