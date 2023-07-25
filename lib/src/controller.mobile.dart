@@ -37,6 +37,12 @@ class MobileVideoPlayerController implements VideoPlayerController {
   }
 
   @override
+  Future<int> currentPosition() {
+    // TODO: implement currentPosition
+    throw UnimplementedError();
+  }
+
+  @override
   Future<void> seek(int position) {
     // TODO: implement seek
     throw UnimplementedError();

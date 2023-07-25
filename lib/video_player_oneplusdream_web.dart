@@ -91,7 +91,7 @@ class VideoPlayerOneplusdreamWeb extends VideoPlayerOneplusdreamPlatform {
   @override
   Future seek(int videoId, int position) async {
     // print('oneplusdream $videoId play ${item.url}');
-    JsFunction func = player['src'];
+    // JsFunction func = player['seek'];
     // func.apply([
     // js.JsObject.jsify({"src": item.url}),
     // ], thisArg: player);
@@ -99,6 +99,13 @@ class VideoPlayerOneplusdreamWeb extends VideoPlayerOneplusdreamPlatform {
       JsFunction setCurrentTime = player['currentTime'];
       setCurrentTime.apply([position], thisArg: player);
     }
+  }
+
+  @override
+  Future<int> currentPosition(int videoId) {
+    JsFunction getCurrentTime = player['currentTime'];
+    final a = getCurrentTime.apply([], thisArg: player);
+    return Future.value(a.toInt());
   }
 
   @override

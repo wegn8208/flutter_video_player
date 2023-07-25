@@ -58,6 +58,11 @@ class WebVideoPlayerController implements VideoPlayerController {
   }
 
   @override
+  Future<int> currentPosition() {
+    return VideoPlayerOneplusdreamPlatform.instance.currentPosition(_videoId);
+  }
+
+  @override
   Future<void> toggleFullScreen(ToggleFullScreenParam param) {
     print('controller videoId $_videoId toggleFullScreen ${param}');
     return VideoPlayerOneplusdreamPlatform.instance

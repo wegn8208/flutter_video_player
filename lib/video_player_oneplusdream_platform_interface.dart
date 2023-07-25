@@ -52,6 +52,10 @@ abstract class VideoPlayerOneplusdreamPlatform extends PlatformInterface {
     throw UnimplementedError('pause() has not been implemented.');
   }
 
+  Future<int> currentPosition(int videoId) {
+    throw UnimplementedError('currentPosition() has not been implemented.');
+  }
+
   Future seek(int videoId, int position) {
     throw UnimplementedError('seek() has not been implemented.');
   }
