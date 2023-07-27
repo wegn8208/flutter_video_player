@@ -179,20 +179,12 @@ class VideoPlayerOneplusdreamWeb extends VideoPlayerOneplusdreamPlatform {
       js.JsObject.jsify({
         "fill": true,
         "responsive": true,
-        // "controls": !(params['hideControls'] ?? false),
-        "controls": true,
-        "autoplay": params['autoPlay'] ?? false,
+        "controls": !(params['hideControls'] ?? false),
+        "autoplay": params['autoPlay'] ?? true,
         "preload": params['preload'] ?? true,
         "poster": params["posterImage"],
-        "preferFullWindow": false, //for ios
-        "fullscreen": {"navigationUi": "auto"},
         "playbackRates": [0.5, 1, 1.25, 1.5, 2],
-        "disablePictureInPicture": true,
-        "enableDocumentPictureInPicture": false,
-        "nativeVideoTracks": true,
-        "nativeAudioTracks": true,
-        "nativeControlsForTouch": false,
-        "muted": true,
+        "muted": params["muted"],
         "normalizeAutoplay": true
       })
     ]);
