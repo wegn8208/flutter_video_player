@@ -69,9 +69,12 @@ class VideoPlayerOneplusdreamWeb extends VideoPlayerOneplusdreamPlatform {
   Future<void> toggleFullScreen(
       int videoId, ToggleFullScreenParam param) async {
     print('oneplusdream $videoId toggleFullScreen ${param.isFullScreen}');
-    final _player = js.context.callMethod('videojs', [
-      html.document.getElementById('video_$videoId'),
-    ]);
+    final _videoElement = html.document.getElementById('video_$videoId');
+    final _player = _videoElement == null
+        ? player
+        : js.context.callMethod('videojs', [
+            _videoElement,
+          ]);
     JsFunction func = _player['requestFullscreen'];
     func.apply([], thisArg: _player);
   }
@@ -99,9 +102,12 @@ class VideoPlayerOneplusdreamWeb extends VideoPlayerOneplusdreamPlatform {
     // js.JsObject.jsify({"src": item.url}),
     // ], thisArg: player);
     if ((position ?? 0) > 0) {
-      final _player = js.context.callMethod('videojs', [
-        html.document.getElementById('video_$videoId'),
-      ]);
+      final _videoElement = html.document.getElementById('video_$videoId');
+      final _player = _videoElement == null
+          ? player
+          : js.context.callMethod('videojs', [
+              _videoElement,
+            ]);
       JsFunction setCurrentTime = _player['currentTime'];
       setCurrentTime.apply([position], thisArg: _player);
     }
@@ -109,9 +115,12 @@ class VideoPlayerOneplusdreamWeb extends VideoPlayerOneplusdreamPlatform {
 
   @override
   Future<int> currentPosition(int videoId) async {
-    final _player = js.context.callMethod('videojs', [
-      html.document.getElementById('video_$videoId'),
-    ]);
+    final _videoElement = html.document.getElementById('video_$videoId');
+    final _player = _videoElement == null
+        ? player
+        : js.context.callMethod('videojs', [
+            _videoElement,
+          ]);
     JsFunction getCurrentTime = _player['currentTime'];
     final position = getCurrentTime.apply([], thisArg: _player);
     return position.toInt();
