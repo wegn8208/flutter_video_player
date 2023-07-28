@@ -105,7 +105,7 @@ class VideoPlayerOneplusdreamWeb extends VideoPlayerOneplusdreamPlatform {
   Future<int> currentPosition(int videoId) {
     JsFunction getCurrentTime = player['currentTime'];
     final a = getCurrentTime.apply([], thisArg: player);
-    return Future.value(a.toInt());
+    return a.toInt();
   }
 
   @override
