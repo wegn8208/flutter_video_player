@@ -69,8 +69,11 @@ class VideoPlayerOneplusdreamWeb extends VideoPlayerOneplusdreamPlatform {
   Future<void> toggleFullScreen(
       int videoId, ToggleFullScreenParam param) async {
     print('oneplusdream $videoId toggleFullScreen ${param.isFullScreen}');
-    JsFunction func = player['requestFullscreen'];
-    func.apply([], thisArg: player);
+    final _player = js.context.callMethod('videojs', [
+      html.document.getElementById('video_$videoId'),
+    ]);
+    JsFunction func = _player['requestFullscreen'];
+    func.apply([], thisArg: _player);
   }
 
   @override
@@ -96,16 +99,22 @@ class VideoPlayerOneplusdreamWeb extends VideoPlayerOneplusdreamPlatform {
     // js.JsObject.jsify({"src": item.url}),
     // ], thisArg: player);
     if ((position ?? 0) > 0) {
-      JsFunction setCurrentTime = player['currentTime'];
-      setCurrentTime.apply([position], thisArg: player);
+      final _player = js.context.callMethod('videojs', [
+        html.document.getElementById('video_$videoId'),
+      ]);
+      JsFunction setCurrentTime = _player['currentTime'];
+      setCurrentTime.apply([position], thisArg: _player);
     }
   }
 
   @override
   Future<int> currentPosition(int videoId) async {
-    JsFunction getCurrentTime = player['currentTime'];
-    final a = getCurrentTime.apply([], thisArg: player);
-    return a.toInt();
+    final _player = js.context.callMethod('videojs', [
+      html.document.getElementById('video_$videoId'),
+    ]);
+    JsFunction getCurrentTime = _player['currentTime'];
+    final position = getCurrentTime.apply([], thisArg: _player);
+    return position.toInt();
   }
 
   @override
