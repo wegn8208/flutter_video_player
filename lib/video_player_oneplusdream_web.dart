@@ -82,16 +82,23 @@ class VideoPlayerOneplusdreamWeb extends VideoPlayerOneplusdreamPlatform {
   @override
   Future<void> play(int videoId, PlayingItem item) async {
     print('oneplusdream $videoId play ${item.url}');
-    JsFunction func = player['src'];
+    final _videoElement = html.document.getElementById('video_$videoId');
+    final _player = _videoElement == null
+        ? player
+        : js.context.callMethod('videojs', [
+            _videoElement,
+          ]);
+
+    JsFunction func = _player['src'];
     func.apply([
       js.JsObject.jsify({"src": item.url}),
-    ], thisArg: player);
+    ], thisArg: _player);
     if ((item.position ?? 0) > 0) {
-      JsFunction setCurrentTime = player['currentTime'];
-      setCurrentTime.apply([item.position], thisArg: player);
+      JsFunction setCurrentTime = _player['currentTime'];
+      setCurrentTime.apply([item.position], thisArg: _player);
     }
-    JsFunction setTitle = player['updateTitleFunc'];
-    setTitle.apply([item.title], thisArg: player);
+    JsFunction setTitle = _player['updateTitleFunc'];
+    setTitle.apply([item.title], thisArg: _player);
   }
 
   @override
@@ -128,12 +135,19 @@ class VideoPlayerOneplusdreamWeb extends VideoPlayerOneplusdreamPlatform {
 
   @override
   Future<void> togglePause(int videoId, bool isPause) async {
+    final _videoElement = html.document.getElementById('video_$videoId');
+    final _player = _videoElement == null
+        ? player
+        : js.context.callMethod('videojs', [
+            _videoElement,
+          ]);
+
     if (isPause) {
-      JsFunction func = player['pause'];
-      func.apply([], thisArg: player);
+      JsFunction func = _player['pause'];
+      func.apply([], thisArg: _player);
     } else {
-      JsFunction func = player['play'];
-      func.apply([], thisArg: player);
+      JsFunction func = _player['play'];
+      func.apply([], thisArg: _player);
     }
   }
 
