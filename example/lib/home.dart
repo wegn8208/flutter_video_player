@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:video_player_oneplusdream/video_player_oneplusdream.dart';
 import 'package:video_player_oneplusdream_example/cache.dart';
@@ -14,12 +16,12 @@ class HomeRoute extends StatelessWidget {
       title: "Rabbit",
       position: 20.0,
     ),
-    PlayingItem(
-      id: '3',
-      url:
-          "https://d305e11xqcgjdr.cloudfront.net/stories/ee09c3b8-5b0c-4aff-b1fe-58f175328850/2.mp4",
-      title: "Rabbit 3",
-    ),
+    // PlayingItem(
+    //   id: '3',
+    //   url:
+    //       "https://d305e11xqcgjdr.cloudfront.net/stories/ee09c3b8-5b0c-4aff-b1fe-58f175328850/2.mp4",
+    //   title: "Rabbit 3",
+    // ),
   ];
 
   @override
@@ -41,6 +43,7 @@ class HomeRoute extends StatelessWidget {
                   enablePreventScreenCapture: true,
                   marqueeText: "Marquee",
                   autoPlay: true,
+                  hideControls: false,
                   onPlaying: (event) {
                     print(
                         "status ${event.status} position: ${event.currentPosition}");

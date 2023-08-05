@@ -217,7 +217,8 @@ class VideoPlayerOneplusdreamWeb extends VideoPlayerOneplusdreamPlatform {
         "poster": params["posterImage"],
         "playbackRates": [0.5, 1, 1.25, 1.5, 2],
         "muted": params["muted"],
-        "normalizeAutoplay": true
+        "normalizeAutoplay": true,
+        "playsinline": params["playsinline"],
       })
     ]);
 
