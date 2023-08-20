@@ -61,6 +61,8 @@ class VideoPlayerOnePlusDream extends StatefulWidget {
 
   final bool? playsinline;
 
+  final bool muted;
+
   const VideoPlayerOnePlusDream(
     this.playingItems, {
     required this.controller,
@@ -78,6 +80,7 @@ class VideoPlayerOnePlusDream extends StatefulWidget {
     this.hideControls = false,
     this.bufferDuration,
     this.playsinline,
+    this.muted = true,
     Key? key,
   }) : super(key: key);
 
@@ -156,6 +159,7 @@ class VideoPlayerOnePlusDreamState extends State<VideoPlayerOnePlusDream> {
               "hideControls": widget.hideControls,
               "bufferDuration": widget.bufferDuration,
               "playsinline": widget.playsinline,
+              "muted": widget.muted
             },
           )
         : Container();
