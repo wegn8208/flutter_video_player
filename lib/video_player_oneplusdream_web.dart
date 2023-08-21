@@ -170,6 +170,16 @@ class VideoPlayerOneplusdreamWeb extends VideoPlayerOneplusdreamPlatform {
   }
 
   @override
+  Stream<VolumeChangeEvent> onVolumeChange({required int videoId}) {
+    return _events(videoId).whereType<VolumeChangeEvent>();
+  }
+
+  @override
+  Stream<LoadErrorEvent> onLoadError({required int videoId}) {
+    return _events(videoId).whereType<LoadErrorEvent>();
+  }
+
+  @override
   Future<void> init(int videoId) async {
     print('oneplusdream $videoId init');
     js.context['oneplusdreamOnPlayerListen_$videoId'] = (method, arguments) {
