@@ -46,6 +46,14 @@ class WebVideoPlayerController implements VideoPlayerController {
           .onPlaying(videoId: videoId)
           .listen((e) => _videoPlayerState?.widget.onPlaying!(e.value));
     }
+    if (_videoPlayerState?.widget.onVolumeChange != null) {
+      VideoPlayerOneplusdreamPlatform.instance
+          .onVolumeChange(videoId: videoId)
+          .listen((event) {
+        print('onVolumeChange $event');
+        _videoPlayerState?.widget.onVolumeChange!(event.value);
+      });
+    }
   }
 
   Future<void> play(PlayingItem item) {

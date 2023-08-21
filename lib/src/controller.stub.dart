@@ -1,6 +1,7 @@
 part of video_player_oneplusdream;
 
 typedef OnPlayingCallback = void Function(PlayingEventDetail event);
+typedef OnVolumeChangeCallback = void Function(VolumeChangeEventDetail event);
 typedef BackCallback = void Function();
 
 abstract class VideoPlayerController {

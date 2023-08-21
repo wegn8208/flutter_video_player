@@ -189,9 +189,11 @@ class VideoPlayerOneplusdreamWeb extends VideoPlayerOneplusdreamPlatform {
             _videoEventStreamController.add(LoadErrorEvent(videoId, arguments));
             break;
           case ON_VOLUME_CHANGE:
-            print('oneplusdream $videoId on volume change $arguments');
-            _videoEventStreamController
-                .add(VolumeChangeEvent(videoId, arguments));
+            final detail = VolumeChangeEventDetail.fromJson(arguments);
+            print(
+                'oneplusdream $videoId on volume change ${detail.isMuted} ${detail.volume}');
+            _videoEventStreamController.add(VolumeChangeEvent(
+                videoId, VolumeChangeEventDetail.fromJson(arguments)));
             break;
           default:
             print('oneplusdream $videoId method not implemented');

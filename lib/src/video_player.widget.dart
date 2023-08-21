@@ -51,6 +51,8 @@ class VideoPlayerOnePlusDream extends StatefulWidget {
   /// onPlaying event
   final OnPlayingCallback? onPlaying;
 
+  final OnVolumeChangeCallback? onVolumeChange;
+
   /// set the message when the last of the playing items is finished
   final String? lastPlayMessage;
 
@@ -76,6 +78,7 @@ class VideoPlayerOnePlusDream extends StatefulWidget {
     this.initialPlayIndex = 0,
     this.onBack,
     this.onPlaying,
+    this.onVolumeChange,
     this.lastPlayMessage,
     this.hideControls = false,
     this.bufferDuration,
