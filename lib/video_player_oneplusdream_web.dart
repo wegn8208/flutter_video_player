@@ -103,11 +103,6 @@ class VideoPlayerOneplusdreamWeb extends VideoPlayerOneplusdreamPlatform {
 
   @override
   Future seek(int videoId, int position) async {
-    // print('oneplusdream $videoId play ${item.url}');
-    // JsFunction func = player['seek'];
-    // func.apply([
-    // js.JsObject.jsify({"src": item.url}),
-    // ], thisArg: player);
     if ((position ?? 0) > 0) {
       final _videoElement = html.document.getElementById('video_$videoId');
       final _player = _videoElement == null
@@ -188,6 +183,15 @@ class VideoPlayerOneplusdreamWeb extends VideoPlayerOneplusdreamPlatform {
             print('oneplusdream $videoId on playing $arguments');
             _videoEventStreamController.add(
                 PlayingEvent(videoId, PlayingEventDetail.fromJson(arguments)));
+            break;
+          case ON_LOAD_ERROR:
+            print('oneplusdream $videoId on load error $arguments');
+            _videoEventStreamController.add(LoadErrorEvent(videoId, arguments));
+            break;
+          case ON_VOLUME_CHANGE:
+            print('oneplusdream $videoId on volume change $arguments');
+            _videoEventStreamController
+                .add(VolumeChangeEvent(videoId, arguments));
             break;
           default:
             print('oneplusdream $videoId method not implemented');

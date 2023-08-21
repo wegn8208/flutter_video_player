@@ -3,6 +3,8 @@ part of video_player_oneplusdream;
 const TOGGLE_FULL_SCREEEN = "toggleFullScreen";
 const ON_BACK_CLICKED = "onBack";
 const ON_PLAYING = "onPlaying";
+const ON_LOAD_ERROR = "onLoadError";
+const ON_VOLUME_CHANGE = "onVolumeChange";
 const RELEASE = "release";
 
 class BackEvent extends VideoEvent<void> {
@@ -11,6 +13,16 @@ class BackEvent extends VideoEvent<void> {
 
 class PlayingEvent extends VideoEvent<PlayingEventDetail> {
   PlayingEvent(int videoId, PlayingEventDetail event) : super(videoId, event);
+}
+
+class LoadErrorEvent extends VideoEvent<String> {
+  LoadErrorEvent(int videoId, String error) : super(videoId, error);
+}
+
+class VolumeChangeEvent extends VideoEvent<VolumeChangeEventDetail> {
+  VolumeChangeEvent(
+      int videoId, VolumeChangeEventDetail volumeChangeEventDetail)
+      : super(videoId, volumeChangeEventDetail);
 }
 
 class PlayingEventDetail {
@@ -26,6 +38,19 @@ class PlayingEventDetail {
         'item': item.toJson(),
         'status': status?.name,
         'currentPosition': currentPosition,
+      };
+}
+
+class VolumeChangeEventDetail {
+  double volume;
+  bool isMuted;
+  VolumeChangeEventDetail(this.volume, this.isMuted);
+  factory VolumeChangeEventDetail.fromJson(json) {
+    return VolumeChangeEventDetail(json["volume"], json["muted"]);
+  }
+  Map<String, dynamic> toJson() => {
+        'volume': volume,
+        'muted': isMuted,
       };
 }
 

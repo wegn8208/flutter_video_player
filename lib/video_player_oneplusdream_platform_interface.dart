@@ -44,6 +44,14 @@ abstract class VideoPlayerOneplusdreamPlatform extends PlatformInterface {
     throw UnimplementedError('onPlaying() has not been implemented.');
   }
 
+  Stream<LoadErrorEvent> onLoadError({required int videoId}) {
+    throw UnimplementedError('onLoadError() has not been implemented.');
+  }
+
+  Stream<VolumeChangeEvent> onVolumeChange({required int videoId}) {
+    throw UnimplementedError('onVolumeChange() has not been implemented.');
+  }
+
   Future play(int videoId, PlayingItem item) {
     throw UnimplementedError('play() has not been implemented.');
   }
